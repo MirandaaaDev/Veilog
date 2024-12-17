@@ -16,33 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `veiculo`
+-- Table structure for table `itens_pedido`
 --
 
-DROP TABLE IF EXISTS `veiculo`;
+DROP TABLE IF EXISTS `itens_pedido`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `veiculo` (
+CREATE TABLE `itens_pedido` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `modelo` varchar(50) DEFAULT NULL,
-  `marca` varchar(50) DEFAULT NULL,
-  `placa` varchar(10) DEFAULT NULL,
-  `categoria` varchar(50) DEFAULT NULL,
-  `ano_de_fabricacao` year DEFAULT NULL,
-  `tag` varchar(50) DEFAULT NULL,
-  `peso_veiculo` decimal(10,2) NOT NULL,
+  `id_produto` int NOT NULL,
+  `quantidade` int NOT NULL,
+  `data` date NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `placa` (`placa`)
+  KEY `id_produto` (`id_produto`),
+  CONSTRAINT `itens_pedido_ibfk_1` FOREIGN KEY (`id_produto`) REFERENCES `produto` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `veiculo`
+-- Dumping data for table `itens_pedido`
 --
 
-LOCK TABLES `veiculo` WRITE;
-/*!40000 ALTER TABLE `veiculo` DISABLE KEYS */;
-/*!40000 ALTER TABLE `veiculo` ENABLE KEYS */;
+LOCK TABLES `itens_pedido` WRITE;
+/*!40000 ALTER TABLE `itens_pedido` DISABLE KEYS */;
+/*!40000 ALTER TABLE `itens_pedido` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-17 16:11:53
+-- Dump completed on 2024-12-17 16:11:55

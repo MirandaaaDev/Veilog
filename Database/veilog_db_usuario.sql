@@ -32,7 +32,7 @@ CREATE TABLE `usuario` (
   `numero_local` int DEFAULT NULL,
   `bairro` varchar(100) DEFAULT NULL,
   `cidade` varchar(100) DEFAULT NULL,
-  `estado` varchar(2) DEFAULT NULL,
+  `uf` varchar(2) DEFAULT NULL,
   `telefone` varchar(15) DEFAULT NULL,
   `status` enum('Ativo','Inativo') NOT NULL DEFAULT 'Ativo',
   `email` varchar(255) DEFAULT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `cpf` (`cpf`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,7 +50,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'Admin Teste','1990-01-01','12345678900','12345-678','Rua Teste',123,'Bairro Teste','Cidade Teste','SP','123456789','Ativo','admin@teste.com','teste','Administrador'),(3,'Alex Santos Miranda','2001-07-03','397.192.378-05','07142-000','Estrada Elenco',1889,'jardim','Guarulhos','SP','(11) 96177-8340','Ativo','alexsmiranda2001@gmail.com','teste','Administrador');
+INSERT INTO `usuario` VALUES (1,'Cleber Oliveira','1994-01-01','123.456.789-00','12345-678','Mamonas',988,'Tiradentes','Rio de Janeiro','RJ','(21) 98745-4545','Ativo','admin@teste.com','teste','Administrador'),(2,'Alex Miranda ','2001-07-03','964.545.487-84','12154-878','Estrada do Elenco',1889,'São Domingos','Guarulhos ','SP','(11) 95541-2158','Ativo','alex@gmail.com','123','Administrador'),(3,'Adriely Miranda','2004-04-07','845.212.125-45','17854-212','Limeira',3723,'Barbacena','Pelotas','MG','(11) 98985-4215','Ativo','adriely@gmail.com','123','Administrador'),(4,'Alini Figueiredo','1985-07-01','144.878.456-45','56565-656','Violoncelo',788,'Oliveiras','São Francisco','GO','(11) 98878-4545','Ativo','alini@gmail.com','123','Funcionario'),(5,'Maitê Santos','2004-10-15','985.636.925-56','07145180','Rua Mica',185,'Parque Primavera','Guarulhos','SP','(11) 98456-3692','Ativo','maite@gmail.com','1234','Administrador'),(6,'Larissa Pinheiro','2004-05-04','898.989.989-89','07145190','Rua Gama',1889,'Parque Primavera','Guarulhos','SP','(11) 98752-5454','Ativo','larissa@gmail.com','123','Funcionario');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -63,4 +63,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-26 18:43:09
+-- Dump completed on 2024-12-17 16:11:55
