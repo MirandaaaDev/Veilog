@@ -23,7 +23,7 @@ public class DBConnection {
     }
 
     public DBConnection() {
-        this("localhost", "3306", "veilog_db", "root", "admin");
+        this("127.0.0.1", "3306", "veilog_db", "root", "Terno070404.");
     }
 
     // Método para obter a conexão, aberto apenas quando necessário
@@ -60,7 +60,7 @@ public class DBConnection {
 	}
 	
 	public void setHost(String host) {
-		this.host = ( host.isEmpty() ? "localhost" : host ) ;
+		this.host = ( host.isEmpty() ? "127.0.0.1" : host ) ;
 	}
 	
 	public String getPort() {

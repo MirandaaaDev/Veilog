@@ -1,0 +1,180 @@
+@charset "UTF-8";
+
+/* Importando uma fonte estilizada */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+h1 {
+  font-size: 36px; /* Tamanho de fonte maior para destaque */
+  color: #fff; /* Cor do texto */
+  font-family: 'Poppins', sans-serif; /* Fonte moderna */
+  text-align: center;
+  margin-bottom: 15px;
+  position: relative; /* Para usar ::before */
+  overflow: hidden; /* Para esconder o efeito fora do elemento */
+  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out; /* Transição suave */
+}
+
+h1::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent; /* tom escuro e sóbrio */
+  z-index: -1; /* Para ficar atrás do texto */
+  transform: scale(0.8); /* Inicialmente menor */
+  border-radius: 5px; /* Bordas arredondadas */
+  transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+}
+
+h1:hover::before {
+  transform: scale(1); /* Expande o efeito */
+  box-shadow: 0 15px 15px -10px #f09819, 0 30px 30px -15px #f09819, 0 60px 60px -20px #f09819;
+}
+
+h1:hover {
+  color: #f09819; /* Cor do texto ao passar o mouse */
+  transform: scale(1.05); /* Pequeno zoom para efeito de destaque */
+}
+
+table{
+  width:100%;
+  table-layout: fixed;
+}
+.tbl-header{
+  background-color: rgba(255,255,255,0.15);
+ }
+.tbl-content{
+  height:300px;
+  overflow-x:auto;
+  margin-top: 0px;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+th{
+  padding: 20px 15px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 12px;
+  color: #fff;
+  text-transform: uppercase;
+}
+td{
+  padding: 15px;
+  text-align: center;
+  word-wrap: break-word;
+  vertical-align:middle;
+  font-weight: 300;
+  font-size: 12px;
+  color: #fff;
+  border-bottom: solid 1px rgba(255,255,255,0.1);
+}
+/* Gradiente animado para o destaque */
+@keyframes tableHighlight {
+  0% {
+    box-shadow: 0 0 5px #f09819, 0 0 15px #f09819, 0 0 30px #f09819;
+  }
+  50% {
+    box-shadow: 0 0 10px #f09819, 0 0 20px #ff512f, 0 0 40px #ff512f;
+  }
+  100% {
+    box-shadow: 0 0 5px #f09819, 0 0 15px #f09819, 0 0 30px #f09819;
+  }
+}
+/* Estilo para destacar a linha da tabela ao passar o mouse */
+table tbody tr:hover {
+  animation: tableHighlight 1.5s infinite;
+  background: linear-gradient(to bottom, #080710, #0d0d20);
+  cursor: pointer; /* Mostra que é interativo */
+  transform: scale(1.02); /* Pequeno zoom para maior impacto */
+  transition: transform 0.2s ease-in-out; /* Suaviza o zoom */
+}
+/* Estilo para os botões da tabela */
+.edit-btn {
+  position: relative; /* Necessário para ::before e ::after */
+  background-color: transparent; /* Botão transparente para efeito */
+  color: #fff; /* Cor do texto */
+  font-size: 12px; /* Tamanho da fonte */
+  padding: 10px 15px; /* Espaçamento interno */
+  border: 2px solid #f09819; /* Borda com cor de destaque */
+  border-radius: 30px; /* Bordas arredondadas */
+  cursor: pointer; /* Cursor tipo ponteiro */
+  overflow: hidden; /* Para esconder os efeitos internos */
+  transition: color 0.4s ease; /* Suavidade na transição */
+}
+.edit-btn::before,
+.edit-btn::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 10px;
+  border-radius: 30px;
+  background-color: rgba(240, 152, 25, 0.8);
+  box-shadow: 0 0 5px #f09819, 0 0 15px #f09819, 0 0 30px #f09819, 0 0 60px #f09819;
+  transition: 0.5s ease;
+}
+.edit-btn::before {
+  top: -10px; /* Posicionado acima do botão */
+}
+.edit-btn::after {
+  bottom: -10px; /* Posicionado abaixo do botão */
+}
+.edit-btn:hover::before,
+.edit-btn:hover::after {
+  width: 80%; /* Largura ao passar o mouse */
+  height: 50%; /* Altura ao passar o mouse */
+  top: 0; /* Posicionado dentro do botão */
+  bottom: 0; /* Também posicionado dentro do botão */
+}
+.edit-btn:hover {
+  color: #fff; /* Cor do texto ao passar o mouse */
+}
+
+/* demo styles */
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+html, body {
+  height: 100%; 
+  margin: 0; /* Remove margens padrão */
+  padding: 0; /* Remove o padding padrão */
+}
+
+body {
+  background: linear-gradient(to bottom, #080710, #0d0d20);
+  background-repeat: no-repeat; 
+  background-size: cover; 
+  font-family: 'Roboto', sans-serif;
+}
+
+section{
+  margin: 70px;
+}
+
+.tbl-content {
+  height: 300px;
+  overflow-x: auto;
+  margin-top: 0px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: linear-gradient(to bottom, #080710, #0d0d20); /* Mantém o fundo azul */
+  background-attachment: local; /* Faz o fundo "seguir" o conteúdo durante a rolagem */
+}
+
+body {
+  background: linear-gradient(to bottom, #080710, #0d0d20);
+  background-attachment: fixed; /* Garante que o fundo do corpo não desapareça */
+}
+
+
+/* for custom scrollbar for webkit browser*/
+
+::-webkit-scrollbar {
+    width: 6px;
+} 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+} 
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+}

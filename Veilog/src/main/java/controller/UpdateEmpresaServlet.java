@@ -1,28 +1,31 @@
 package controller;
 
-import com.google.gson.Gson;
-import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Usuario;
-import model.UsuarioDAO;
+import model.Empresa;
+import model.EmpresaDAO;
 import model.ResponseMessage;
 
-@WebServlet("/CadUserServlet")
-public class CadUserServlet extends HttpServlet {
+import java.io.IOException;
+
+
+import com.google.gson.Gson;
+
+@WebServlet("/UpdateEmpresaServlet")
+public class UpdateEmpresaServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json; charset=UTF-8");
+    	response.setContentType("application/json; charset=UTF-8");
 
-        // Obtendo os parâmetros da requisição
+        int id = Integer.parseInt(request.getParameter("id"));
         String nome = request.getParameter("nome");
-        String dataNascimento = request.getParameter("dataNascimento");
-        String cpf = request.getParameter("cpf");
+        String cnpj = request.getParameter("cnpj");
+        String tipoPessoa = request.getParameter("tipoPessoa");
         String cep = request.getParameter("cep");
         String rua = request.getParameter("rua");
         int numeroLocal = Integer.parseInt(request.getParameter("numeroLocal"));
@@ -31,16 +34,12 @@ public class CadUserServlet extends HttpServlet {
         String uf = request.getParameter("uf");
         String telefone = request.getParameter("telefone");
         String email = request.getParameter("email");
-        String senha = request.getParameter("senha");
-        String nivelUsuario = request.getParameter("nivelUsuario");
-        String status = "ativo"; // valor fixo para status
-
-        // Criando o usuário
-        Usuario usuario = Usuario.criarUsuario(
-            0, 
+ 
+        Empresa empresa = Empresa.criarEmpresa(
+            id, 
             nome,
-            java.sql.Date.valueOf(dataNascimento),
-            cpf,
+            cnpj,
+            tipoPessoa,
             cep,
             rua,
             numeroLocal,
@@ -48,29 +47,28 @@ public class CadUserServlet extends HttpServlet {
             cidade,
             uf,
             telefone,
-            status,
-            email,
-            senha,
-            nivelUsuario
+            email
         );
-
+        
+        
         try {
-            UsuarioDAO usuarioDAO = new UsuarioDAO();
-            boolean sucesso = usuarioDAO.save(usuario);
+            // Atualizando o usuário no banco
+        	EmpresaDAO empresaDAO = new EmpresaDAO();
+            boolean sucesso = empresaDAO.updateEmpresa(empresa);
 
             // Criando a resposta JSON com Gson
             Gson gson = new Gson();
             String jsonResponse;
 
             if (sucesso) {
-                jsonResponse = gson.toJson(new ResponseMessage("success", "Usuário cadastrado com sucesso."));
+                jsonResponse = gson.toJson(new ResponseMessage("success", "Empresa atualizada com sucesso."));
             } else {
-                jsonResponse = gson.toJson(new ResponseMessage("error", "Erro ao cadastrar usuário."));
+                jsonResponse = gson.toJson(new ResponseMessage("error", "Erro ao atualizar empresa."));
             }
 
             response.getWriter().write(jsonResponse);
         } catch (Exception e) {
-            e.printStackTrace();  // Adiciona o stack trace para ajudar no diagnóstico
+            e.printStackTrace();  
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
 

@@ -1,83 +1,85 @@
 package controller;
 
+import java.io.IOException;
+
+import com.google.gson.Gson;
+import model.Usuario;
+import model.UsuarioDAO;
+import model.ResponseMessage;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import repository.DBConnection;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-
-/**
- * Servlet para atualizar os dados de um usuário
- */
 @WebServlet("/UpdateUserServlet")
 public class UpdateUserServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-     */
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html; charset=UTF-8");
-        PrintWriter out = response.getWriter();
+        response.setContentType("application/json; charset=UTF-8");
+
+        // Obtendo os parâmetros da requisição
+        int id = Integer.parseInt(request.getParameter("id"));
+        String nome = request.getParameter("nome");
+        String dataNascimento = request.getParameter("dataNascimento");
+        String cpf = request.getParameter("cpf");
+        String cep = request.getParameter("cep");
+        String rua = request.getParameter("rua");
+        int numeroLocal = Integer.parseInt(request.getParameter("numeroLocal"));
+        String bairro = request.getParameter("bairro");
+        String cidade = request.getParameter("cidade");
+        String uf = request.getParameter("uf");
+        String telefone = request.getParameter("telefone");
+        String email = request.getParameter("email");
+        String senha = request.getParameter("senha");
+        String nivelUsuario = request.getParameter("nivelUsuario");
+
+        // Criando o usuário com os dados atualizados
+        Usuario usuario = Usuario.criarUsuario(
+            id, 
+            nome,
+            java.sql.Date.valueOf(dataNascimento),
+            cpf,
+            cep,
+            rua,
+            numeroLocal,
+            bairro,
+            cidade,
+            uf,
+            telefone,
+            "ativo", // status fixo, como no cadastro
+            email,
+            senha,
+            nivelUsuario
+        );
 
         try {
-            int id = Integer.parseInt(request.getParameter("id"));
-            String nome = request.getParameter("nome");
-            String dataNascimento = request.getParameter("dataNascimento");
-            String cpf = request.getParameter("cpf");
-            String cep = request.getParameter("cep");
-            String rua = request.getParameter("rua");
-            int numeroLocal = Integer.parseInt(request.getParameter("numeroLocal"));
-            String bairro = request.getParameter("bairro");
-            String cidade = request.getParameter("cidade");
-            String estado = request.getParameter("estado");
-            String telefone = request.getParameter("telefone");
-            String status = request.getParameter("status");
-            String email = request.getParameter("email");
-            String senha = request.getParameter("senha");
-            String nivelUsuario = request.getParameter("nivelUsuario");
+            // Atualizando o usuário no banco
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            boolean sucesso = usuarioDAO.updateUsuario(usuario);
 
-            try (Connection connection = new DBConnection().getConnection()) {
-                String sql = "UPDATE usuario SET nome = ?, data_nascimento = ?, cpf = ?, cep = ?, rua = ?, numero_local = ?, bairro = ?, cidade = ?, estado = ?, telefone = ?, status = ?, email = ?, senha = ?, nivel_usuario = ? WHERE id = ?";
-                PreparedStatement stmt = connection.prepareStatement(sql);
+            // Criando a resposta JSON com Gson
+            Gson gson = new Gson();
+            String jsonResponse;
 
-                stmt.setString(1, nome);
-                stmt.setString(2, dataNascimento);
-                stmt.setString(3, cpf);
-                stmt.setString(4, cep);
-                stmt.setString(5, rua);
-                stmt.setInt(6, numeroLocal);
-                stmt.setString(7, bairro);
-                stmt.setString(8, cidade);
-                stmt.setString(9, estado);
-                stmt.setString(10, telefone);
-                stmt.setString(11, status);
-                stmt.setString(12, email);
-                stmt.setString(13, senha);
-                stmt.setString(14, nivelUsuario);
-                stmt.setInt(15, id);
-
-                int rowsUpdated = stmt.executeUpdate();
-
-                if (rowsUpdated > 0) {
-                    response.sendRedirect("listusers.jsp");
-                } else {
-                    out.println("<p>Erro ao atualizar os dados.</p>");
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                out.println("<p>Erro ao atualizar o usuário.</p>");
+            if (sucesso) {
+                jsonResponse = gson.toJson(new ResponseMessage("success", "Usuário atualizado com sucesso."));
+            } else {
+                jsonResponse = gson.toJson(new ResponseMessage("error", "Erro ao atualizar usuário."));
             }
+
+            response.getWriter().write(jsonResponse);
         } catch (Exception e) {
-            e.printStackTrace();
-            out.println("<p>Erro ao processar os dados.</p>");
+            e.printStackTrace();  // Adiciona o stack trace para ajudar no diagnóstico
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+
+            Gson gson = new Gson();
+            String jsonResponse = gson.toJson(new ResponseMessage("error", "Erro interno no servidor."));
+            response.getWriter().write(jsonResponse);
         }
     }
 }

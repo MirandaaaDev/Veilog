@@ -12,13 +12,13 @@ public class Usuario {
     private int numeroLocal;
     private String bairro;
     private String cidade;
-    private String estado;
+    private String uf;
     private String telefone;
     private String status;
     private String email;
     private String senha;
     private String nivelUsuario;
-    
+	
     // Getters e Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
@@ -27,7 +27,9 @@ public class Usuario {
     public void setNome(String nome) { this.nome = nome; }
     
     public Date getDataNascimento() { return dataNascimento; }
-    public void setDataNascimento(Date dataNascimento) { this.dataNascimento = dataNascimento; }
+    public void setDataNascimento(Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
     
     public String getCpf() { return cpf; }
     public void setCpf(String cpf) { this.cpf = cpf; }
@@ -47,8 +49,8 @@ public class Usuario {
     public String getCidade() { return cidade; }
     public void setCidade(String cidade) { this.cidade = cidade; }
     
-    public String getEstado() { return estado; }
-    public void setEstado(String estado) { this.estado = estado; }
+    public String getUf() { return uf; }
+    public void setUf(String uf) { this.uf = uf; }
     
     public String getTelefone() { return telefone; }
     public void setTelefone(String telefone) { this.telefone = telefone; }
@@ -64,4 +66,62 @@ public class Usuario {
     
     public String getNivelUsuario() { return nivelUsuario; }
     public void setNivelUsuario(String nivelUsuario) { this.nivelUsuario = nivelUsuario; }
+    
+    public static Usuario criarUsuario(
+            int id,
+            String nome,
+            Date dataNascimento,
+            String cpf,
+            String cep,
+            String rua,
+            int numeroLocal,
+            String bairro,
+            String cidade,
+            String uf,
+            String telefone,
+            String status,
+            String email,
+            String senha,
+            String nivelUsuario
+        ) {
+            Usuario usuario = new Usuario();
+            usuario.setId(id);
+            usuario.setNome(nome);
+            usuario.setDataNascimento(dataNascimento);
+            usuario.setCpf(cpf);
+            usuario.setCep(cep);
+            usuario.setRua(rua);
+            usuario.setNumeroLocal(numeroLocal);
+            usuario.setBairro(bairro);
+            usuario.setCidade(cidade);
+            usuario.setUf(uf);
+            usuario.setTelefone(telefone);
+            usuario.setStatus(status);
+            usuario.setEmail(email);
+            usuario.setSenha(senha);
+            usuario.setNivelUsuario(nivelUsuario);
+            return usuario;
+        }
+    
+    public String toJson() {
+    	return "{" +
+    	        "\"id\":" + this.getId() + "," +
+    	        "\"nome\":\"" + this.getNome() + "\"," +
+    	        "\"cpf\":\"" + this.getCpf() + "\"," +
+    	        "\"dataNascimento\":\"" + getDataNascimento() + "\"," +
+    	        "\"cep\":\"" + this.getCep() + "\"," +
+    	        "\"rua\":\"" + this.getRua() + "\"," +
+    	        "\"numeroLocal\":" + this.getNumeroLocal() + "," +
+    	        "\"bairro\":\"" + this.getBairro() + "\"," +
+    	        "\"cidade\":\"" + this.getCidade() + "\"," +
+    	        "\"uf\":\"" + this.getUf() + "\"," +
+    	        "\"telefone\":\"" + this.getTelefone() + "\"," +
+    	        "\"email\":\"" + this.getEmail() + "\"," +
+    	        "\"status\":\"" + this.getStatus() + "\"," +
+    	        "\"senha\":\"" + this.getSenha() + "\"," +
+    	        "\"nivelUsuario\":\"" + this.getNivelUsuario() + "\"" +
+    	    "}";
+    }
 }
+
+

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Usuário</title>
+    <title>Editar Empresa</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="styles/cadastro.css">
     <link rel="stylesheet" href="styles/edit.css">
@@ -14,34 +14,32 @@
     <header>
         <nav>
             <ul>
-                <li><a href="listusers.jsp">Lista de Usuários</a></li>
+                <li><a href="listempresas.jsp">Lista de Empresas</a></li>
                 <li><a href="logout.jsp">Logout</a></li>
             </ul>
         </nav>
     </header>
 
     <div class="form-container">
-        <h2>Editar Usuário</h2>
-        <form id="edit-user-form" action="./UpdateUserServlet" method="POST">
+        <h2>Editar Empresa</h2>
+        <form id="edit-empresa-form" action="./UpdateEmpresaServlet" method="POST">
             <input type="hidden" name="id" id="id"/>
 
-            Nome: <input type="text" id="nome" name="nome" required/><br>
-            Data de Nascimento: <input type="date" id="dataNascimento" name="dataNascimento" required/><br>
-            CPF: <input type="text" id="cpf" name="cpf" maxlength="14" required/><br>
+            Nome: <input type="text" id="nome" name="nome" required/><br> 
+            CNPJ: <input type="text" id="cnpj" name="cnpj" maxlength="14" required/><br>
             CEP: <input type="text" id="cep" name="cep" maxlength="9" required/><br>
             Rua: <input type="text" id="rua" name="rua" required/><br>
-            Número Local: <input type="text" id="numeroLocal" name="numeroLocal" required/><br>
             Bairro: <input type="text" id="bairro" name="bairro" required/><br>
             Cidade: <input type="text" id="cidade" name="cidade" required/><br>
-            Estado: <input type="text" id="uf" name="uf" maxlength="2" required/><br>
+            UF: <input type="text" id="uf" name="uf" maxlength="2" required/><br>
+            Número Local: <input type="text" id="numeroLocal" name="numeroLocal" required/><br>
             Telefone: <input type="text" id="telefone" name="telefone" maxlength="15" required/><br>
             Email: <input type="email" id="email" name="email" required/><br>
-            Senha: <input type="password" id="senha" name="senha" required/><br>
-            Nível de Usuário: <input type="text" id="nivelUsuario" name="nivelUsuario" disabled/><br>
-            Novo Nível de Usuário:
-            <select name="nivelUsuario" required>
-                <option value="Administrador">Administrador</option>
-                <option value="Funcionário">Funcionário</option>
+            Nível de Usuário: <input type="text" id="tipoPessoa" name="tipoPessoa" disabled/><br>
+            Novo Tipo Pessoa:
+            <select name="tipoPessoa" required>
+                <option value="Jurídica">Jurídica</option>
+                <option value="Física">Física</option>
             </select><br>
             <button type="submit">Salvar</button>
         </form>
@@ -49,51 +47,48 @@
 
     <script>
     $(document).ready(function() {
-        var userId = new URLSearchParams(window.location.search).get('id');
+        var empresaId = new URLSearchParams(window.location.search).get('id');
         
         // Preenche os campos do formulário com os dados do usuário
         $.ajax({
-            url: './EditUserServlet?id=' + userId,
+            url: './EditEmpresaServlet?id=' + empresaId,
             type: 'GET',
             dataType: 'json',
-            success: function(user) {
-                $('#id').val(user.id);
-                $('#nome').val(user.nome);
-                const dataParts = new Date(user.dataNascimento).toISOString().split('T')[0];
-                $('#dataNascimento').val(dataParts);
-                $('#cpf').val(user.cpf);
-                $('#cep').val(user.cep);
-                $('#rua').val(user.rua);
-                $('#numeroLocal').val(user.numeroLocal);
-                $('#bairro').val(user.bairro);
-                $('#cidade').val(user.cidade);
-                $('#uf').val(user.uf);
-                $('#telefone').val(user.telefone);
-                $('#email').val(user.email);
-                $('#senha').val(user.senha);
-                $('#nivelUsuario').val(user.nivelUsuario);
+            success: function(empresa) {
+                $('#id').val(empresa.id);
+                $('#nome').val(empresa.nome);
+                $('#tipoPessoa').val(empresa.tipoPessoa);
+                $('#cnpj').val(empresa.cnpj);
+                $('#cep').val(empresa.cep);
+                $('#rua').val(empresa.rua);
+                $('#bairro').val(empresa.bairro);
+                $('#cidade').val(empresa.cidade);
+                $('#uf').val(empresa.uf);
+                $('#numeroLocal').val(empresa.numeroLocal);
+                $('#telefone').val(empresa.telefone);
+                $('#email').val(empresa.email);
             },
             error: function(xhr, status, error) {
-                alert('Erro ao carregar os dados do usuário.');
+                alert('Erro ao carregar os dados da empresa.');
             }
         });
 
         // Ao submeter o formulário de edição
-        $('#edit-user-form').on('submit', function(e) {
+        $('#edit-empresa-form').on('submit', function(e) {
             e.preventDefault();  // Impede o envio do formulário
 
             var formData = $(this).serialize();  // Serializa os dados do formulário
 
-            // Envia os dados para o UpdateUserServlet via AJAX
+            // Envia os dados para o UpdateEmpresaServlet via AJAX
             $.ajax({
-                url: './UpdateUserServlet',
+                url: './UpdateEmpresaServlet',
                 type: 'POST',
                 data: formData,
                 dataType: 'json',
                 success: function(response) {
                     alert(response.message);  // Exibe o alerta com a mensagem
                     if (response.status === 'success') {
-                        window.location.href = 'listusers.jsp';  // Redireciona para listusers.jsp
+                        window.location.href = 'listempresas.jsp';  // Redireciona para listempresas.jsp
                     }
                 },
                 error: function(xhr, status, error) {

@@ -1,0 +1,97 @@
+@charset "UTF-8";
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo do corpo */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to bottom, #080710, #0d0d20);
+    margin: 0;
+}
+
+/* Header */
+header {
+    background: rgba(255, 255, 255, 0.1);
+    border-bottom: 2px solid #f7941e;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: 60px; /* Header mais grosso */
+    animation: slideDown 1s ease-in-out;
+}
+
+header nav {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 1em 1em;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 100px;
+}
+
+header nav ul li {
+    position: relative;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+}
+
+header nav ul li a:hover {
+    color: #f7941e; /* Laranja vibrante */
+}
+
+/* Animação hover com linha */
+header nav ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background-color: #f7941e;
+    transition: width 0.4s ease-in-out;
+}
+
+header nav ul li a:hover::after {
+    width: 100%;
+}
+
+/* Animação ao aparecer */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    header nav ul {
+        flex-direction: column;
+        gap: 1em;
+    }
+    header nav {
+        text-align: center;
+    }
+}
